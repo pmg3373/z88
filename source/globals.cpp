@@ -35,9 +35,20 @@ BusALU ifALU("ifALU", DATA_BITS);
 
 
 // IF/ID
+Clearable ifid_v("IfId_V", 1);
+StorageObject ifid_ir("IfId_IR", DATA_BITS);
+StorageObject ifid_npc("IfId_NPC", DATA_BITS);
+if_id_reg IFID =
+    {&ifid_v, &ifid_ir, &ifid_npc};
 
 
 // ID/EX
+StorageObject idex_a("IdEx_A", DATA_BITS);
+StorageObject idex_b("IdEx_B", DATA_BITS);
+StorageObject idex_ir("IdEx_IR", DATA_BITS);
+StorageObject idex_imm("IdEx_IMM", DATA_BITS);
+id_ex_reg IDEX =
+    {&idex_a, idex_b, idex_ir, idex_imm};
 
 
 // EX/MEM

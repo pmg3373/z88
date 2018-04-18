@@ -19,13 +19,8 @@ extern bool done;
 // Standard register set
 extern Counter regs[32];
 extern Counter pc;
-extern StorageObject ir;
 extern StorageObject iar;
 extern StorageObject temp;
-
-extern StorageObject a;
-extern StorageObject b;
-extern StorageObject c;
 
 
 // ALUs
@@ -44,21 +39,34 @@ extern Memory im;
 // IF/ID
 typedef struct if_id_register_struct {
     Clearable *v;
+    StorageObject *ir;
+    StorageObject *npc;
 } if_id_reg;
 
 
 // ID/EX
 typedef struct id_ex_register_struct {
+    StorageObject *a;
+    StorageObject *b;
+    StorageObject *ir;
+    StorageObject *imm;
 } id_ex_reg;
 
 
 // EX/MEM
 typedef struct ex_mem_register_struct {
+    StorageObject *ir;
+    StorageObject *ALUOutput;
+    StorageObject *b;
+    StorageObject *cond;
 } ex_mem_reg;
 
 
 // MEM/WB
 typedef struct mem_wb_register_struct {
+    StorageObject *ir;
+    StorageObject *ALUOutput;
+    StorageObject *LMD
 } mem_wb_reg;
 
 
