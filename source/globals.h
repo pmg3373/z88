@@ -7,6 +7,8 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
 
+#include "includes.h"
+
 #define ADDR_BITS 32
 #define DATA_BITS 32
 
@@ -27,8 +29,8 @@ extern StorageObject c;
 
 
 // ALUs
-extern BusALU mainALU
-extern BusALU ifALU
+extern BusALU mainALU;
+extern BusALU ifALU;
 
 
 // Memory
