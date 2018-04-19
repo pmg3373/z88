@@ -48,7 +48,7 @@ StorageObject idex_b("IdEx_B", DATA_BITS);
 StorageObject idex_ir("IdEx_IR", DATA_BITS);
 StorageObject idex_imm("IdEx_IMM", DATA_BITS);
 id_ex_reg IDEX =
-    {&idex_a, idex_b, idex_ir, idex_imm};
+    {&idex_a, &idex_b, &idex_ir, &idex_imm};
 
 
 // EX/MEM

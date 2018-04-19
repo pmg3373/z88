@@ -66,7 +66,7 @@ typedef struct ex_mem_register_struct {
 typedef struct mem_wb_register_struct {
     StorageObject *ir;
     StorageObject *ALUOutput;
-    StorageObject *LMD
+    StorageObject *LMD;
 } mem_wb_reg;
 
 
