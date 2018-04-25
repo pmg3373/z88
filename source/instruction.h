@@ -14,6 +14,8 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
+class instruction{
+public:
 enum opcodes {
     NOP = 0b00000100000000000000000000000000,
     J  = 0b00001000000000000000000000000000,
@@ -56,6 +58,9 @@ enum    instructionFormat {
     func = 0b00000000000000000000000000111111,
     imm = 0b00000000000000001111111111111111,
     target = 0b00000011111111111111111111111111
+};
+private:
+    
 };
 
 

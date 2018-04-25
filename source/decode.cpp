@@ -3,6 +3,10 @@
 //
 // Contains functions for the decode stage of the pipeline
 
-void id1() {}
+#include "includes.h"
+
+void id1(StorageObject* IR) {
+    
+}
 
 void id2() {}

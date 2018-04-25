@@ -7,14 +7,18 @@
 
 // Useful global variables
 bool done = false;
+StorageObject zero("zero", DATA_BITS, 0);
+StorageObject six("six", DATA_BITS, 6);
+StorageObject sixteen("sixteen", DATA_BITS, 16);
 
 
 // Standard register set
-// Counter regs[32];
+Counter* registerfile[32];
 Counter pc("PC", DATA_BITS);
 StorageObject ir("IR", DATA_BITS);
 StorageObject iar("IAR", DATA_BITS);
 StorageObject temp("TEMP", DATA_BITS);
+StorageObject extemp("EXTEMP", DATA_BITS);
 
 StorageObject a("A", DATA_BITS);
 StorageObject b("B", DATA_BITS);
@@ -24,6 +28,8 @@ StorageObject c("C", DATA_BITS);
 // ALUs
 BusALU mainALU("mainALU", DATA_BITS);
 BusALU ifALU("ifALU", DATA_BITS);
+
+BusALU exALU("exALU", DATA_BITS);
 
 
 // Memory
@@ -65,8 +71,11 @@ id_ex_reg IDEX =
 Bus op1("OP1", DATA_BITS);
 Bus op2("OP2", DATA_BITS);
 Bus out("OUT", DATA_BITS);
+Bus exbus("Ex Bus", DATA_BITS)
 
 
 // Misc busses
+
+
 
 
