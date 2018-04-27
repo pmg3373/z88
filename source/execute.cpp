@@ -7,8 +7,59 @@
 #include "instruction.h"
 
 void ex1() {}
+void ex1alu() {
+}
+
+void ex1loadstore() {
+
+}
+
+void ex1branch() {
+
+}
 
 void ex2() {}
+void ex2alu() {
+    // EX/MEM.IR <- ID/EX.IR
+    // TODO
+    SOMEBUS.pullFrom(*IDEX.IR);
+    EXMEM.IR->latchFrom(SOMEBUS);
+
+    //EX/MEM.ALUOutput <- ID/EX.A func ID/EX.{B,Imm}
+    SOMEALU.OP1().pullFrom(*IDEX.A);
+    if (R-R) SOMEALU.OP2().pullFrom(*IDEX.B);
+    else     SOMEALU.OP2().pullFrom(*IDEX.Imm);
+    switch (OPERATION(IDEX.IR->value())) {
+        case OP_ADD:
+            SOMEALU.perform(BusALU::op_add);
+            break;
+        default:
+            SOMEALU.perform(BusALU::op_add);
+            break;
+    }
+    EXMEM.ALUOutput.latchFrom(SOMEALU); 
+}
+
+void ex2loadstore() {
+    // EX/MEM.IR <- ID/EX.IR
+    // TODO
+    SOMEBUS.pullFrom(*IDEX.IR);
+    EXMEM.IR->latchFrom(SOMEBUS);
+
+    // EX/MEM.ALUOutput <- ID/EX.A + ID/EX.Imm
+    SOMEALU.OP1().pullFrom(*IDEX.A);
+    SOMEALU.OP1().pullFrom(*IDEX.Imm);
+    SOMEALU.perform(BusALU::op_add);
+    EXMEM.ALUOutput->latchFrom(SOMEALU.OUT());
+
+    // EX/MEM.B <- ID/EX.B
+    SOMEBUS.pullFrom(*IDEX.B);
+    EXMEM.B->latchFrom(SOMEBUS);
+}
+
+void ex2branch() {
+
+}
 
 void exectutionSwitch(StorageObject* registerFile[], int exStage){
     int curopcode = ir.value() && instruction.op;

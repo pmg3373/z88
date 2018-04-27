@@ -7,6 +7,10 @@
 
 
 void id1() {
+    //;sdjf;odasjfosdafi;asfjiasdf;asjcaslidooa
+}
+
+void id2() {
     // ID/EX.A <- reg[IF/ID.IR[rs]];
     // TODO
     BUSA.pullFrom(regs[RS(IFID.ir->value())]);
@@ -28,8 +32,4 @@ void id1() {
     SOMEALU.OP2().pullFrom(CONSTANT);
     SOMEALU.perform(BusALU::op_sign_extend);
     IDEX.Imm->latchFrom(SOMEALU.OUT());
-}
-
-void id2() {
-    //;sdjf;odasjfosdafi;asfjiasdf;asjcaslidooa
 }
