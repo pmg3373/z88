@@ -43,7 +43,7 @@ BusALU exALU("exALU", DATA_BITS);
 // IF/ID
 Clearable ifid_v("IfId_V", 1);
 StorageObject ifid_ir("IfId_IR", DATA_BITS);
-StorageObject ifid_npc("IfId_NPC", DATA_BITS);
+Counter ifid_npc("IfId_NPC", DATA_BITS);
 if_id_reg IFID =
     {&ifid_v, &ifid_ir, &ifid_npc};
 

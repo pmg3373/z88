@@ -32,5 +32,6 @@ using namespace std;
 #include "globals.h"
 #include "prototypes.h"
 #include "instruction.h"
+#include "usefuldefines.h"
 
 #endif

@@ -40,7 +40,7 @@ extern Memory im;
 typedef struct if_id_register_struct {
     Clearable *v;
     StorageObject *ir;
-    StorageObject *npc;
+    Counter *npc;
 } if_id_reg;
 
 

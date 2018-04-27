@@ -34,20 +34,30 @@ void if1(StorageObject* PC, Memory* programMemory, Bus* bus) {
  * @param programMemory
  * @param ALU
  */
-void if2(StorageObject* IFIDIR, Counter* PC, StorageObject* IMM_MASK, 
-        StorageObject* IFIDNPC, Memory* programMemory, BusALU* ALU) {
-    
-    if( (IFIDIR->value() & instruction.op == instruction.branch) && ( 1/*reg[IF/ID.IR[rs] op 0*/) ){ //TODO: Discuss with Carithers what this means
-        //TODO: I have no idea how to do this in one tick
-        //The result of IFIDIR & IMM_MASK needs to be sign extended shifted right twice
-        //and then PC and IFIDPC both need the result
+//void if2(StorageObject* IFIDIR, Counter* PC, StorageObject* IMM_MASK, 
+//        StorageObject* IFIDNPC, Memory* programMemory, BusALU* ALU) {
+void if2() {
+    // If this is a branch instruction
+    if(((IFID.ir->value() & BRANCH_INSTR) == BRANCH_INSTR) &&
+        // And the condition is met
+        //TODO
+        (DECODEREGISTER(IFID.ir->value()) OP 0)) {
+        
+        // Add some numbers together for both the PC and NPC
+        // TODO
+        SOMEALU.op1()->latchFrom(*IFID.npc);
+
+        // This decode immediate instruction might need to be a sign extend in
+        // the previous clock tick
+        SOMEALU.op2()->latchFrom(*DECODEIMM(IFID.ir->value()));
+        SOMEALU.perform(BusALU::op_add);
+
+        pc.latchFrom(SOMEALU.OUT());
+        IFID.npc->latchFrom(SOMEALU.OUT());
     }
     else{
-        PC->perform(Counter::incr4);
-        //TODO:This may have some issues depending on timing could push incr back to step 1
-        IFIDNPC->latchFrom(ALU->OUT());
-        ALU->OP1().pullFrom(PC);
-        
+        pc.perform(Counter::incr4);
+        IFID.npc->perform(Counter::incr4);
     }
     
     programMemory->read();
