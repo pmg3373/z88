@@ -13,9 +13,9 @@
  * @param programMemory: Pointer to the memory unit that contain the program memory
  * @param bus: Pointer to a Bus
  */
-void if1(StorageObject* PC, Memory* programMemory, Bus* bus) {
-    bus->IN().pullFrom(PC);
-    programMemory->MAR().latchFrom(bus->OUT());
+void if1() {
+    fPC.IN().pullFrom(pc);
+    im.MAR().latchFrom(fPC.OUT());
 }
 
 /**

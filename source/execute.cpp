@@ -58,7 +58,8 @@ void ex2loadstore() {
 }
 
 void ex2branch() {
-
+    // There is RTL for this section, but I don't understand the point of it
+    // so I'm leaving this blank for now
 }
 
 void exectutionSwitch(StorageObject* registerFile[], int exStage){
