@@ -60,9 +60,22 @@ StorageObject idex_imm("IdEx_IMM", DATA_BITS);
 
 
 // EX/MEM
+StorageObject exmem_ir("ExMem_IR", DATA_BITS);
+StorageObject exmem_aluoutput("ExMem_ALUOutput", DATA_BITS);
+StorageObject exmem_b("ExMem_B", DATA_BITS);
+StorageObject exmem_cond("ExMem_COND", DATA_BITS);
+StorageObject exmem_cpc("ExMem_CPC", DATA_BITS);
+ex_mem_reg EXMEM =
+    {&exmem_ir, &exmem_aluoutput, &exmem_b, &exmem_cond, &exmem_cpc};
 
 
 // MEM/WB
+StorageObject memwb_ir("MemWb_IR", DATA_BITS);
+StorageObject memwb_aluoutput("MemWb_ALUOutput", DATA_BITS);
+StorageObject memwb_lmd("MemWb_LMD", DATA_BITS);
+StorageObject memwb_cpc("MemWb_CPC", DATA_BITS);
+mem_wb_reg =
+    {&memwb_ir, &memwb_aluoutput, &memwb_lmd, &memwb_cpc};
 
 
 // Constants
@@ -78,7 +91,17 @@ Bus exbus("Ex Bus", DATA_BITS);
 
 
 // Misc busses
+// Fetch
+Bus fPC("fPC", DATA_BITS);
 
+
+// Decode
+
+// Execute
+
+// Memory
+
+// WB
 
 
 

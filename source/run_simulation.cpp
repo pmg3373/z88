@@ -18,12 +18,15 @@ void run_simulation(char *objfile) {
         ex1();
         mem1();
         wb1();
+
         Clock::tick();
+
         if2();
         id2();
         ex2();
         mem2();
         wb2();
+
         Clock::tick();
     }
 }

@@ -98,7 +98,8 @@ extern Bus wb_LMD_bus;
 typedef struct if_id_register_struct {
     Clearable *v;
     StorageObject *ir;
-    StorageObject *npc;
+    Counter *npc;
+    StorageObject *cpc;
 } if_id_reg;
 
 
@@ -108,6 +109,7 @@ typedef struct id_ex_register_struct {
     StorageObject *b;
     StorageObject *ir;
     StorageObject *imm;
+    StorageObject *cpc;
 } id_ex_reg;
 
 
@@ -117,6 +119,7 @@ typedef struct ex_mem_register_struct {
     StorageObject *ALUOutput;
     StorageObject *b;
     StorageObject *cond;
+    StorageObject *cpc;
 } ex_mem_reg;
 
 
@@ -142,6 +145,15 @@ extern Bus exbus;
 
 
 // Misc busses
+// Fetch
+extern Bus fPC;
 
+// Decode
+
+// Execute
+
+// Memory
+
+// WB
 
 #endif
