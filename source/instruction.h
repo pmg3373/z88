@@ -59,8 +59,110 @@ enum    instructionFormat {
     imm = 0b00000000000000001111111111111111,
     target = 0b00000011111111111111111111111111
 };
-private:
+
+enum    instructionShifts {
+    op_shift = 26,
+    rs_shift = 21,
+    rt_shift = 16,
+    rd_shift = 11,
+    sh_shift = 6
     
+};
+
+    static void NOP_tick_1();
+    static void NOP_tick_2();
+    
+    static void J_tick_1();
+    static void J_tick_2();
+    
+    static void JAL_tick_1();
+    static void JAL_tick_2();
+    
+    static void BEQ_tick_1();
+    static void BEQ_tick_2();
+    
+    static void BNE_tick_1();
+    static void BNE_tick_2();
+    
+    static void ADDI_tick_1();
+    static void ADDI_tick_2();
+    
+    static void SLTI_tick_1();
+    static void SLTI_tick_2();
+    
+    static void ANDI_tick_1();
+    static void ANDI_tick_2();
+    
+    static void ORI_tick_1();
+    static void ORI_tick_2();
+    
+    static void XORI_tick_1();
+    static void XORI_tick_2();
+    
+    static void LUI_tick_1();
+    static void LUI_tick_2();
+    
+    static void LW_tick_1();
+    static void LW_tick_2();
+    
+    static void SW_tick_1();
+    static void SW_tick_2();
+    
+    static void HALT_tick_1();
+    static void HALT_tick_2();
+    
+    static void JR_tick_1();
+    static void JR_tick_2();
+    
+    static void JALR_tick_1();
+    static void JALR_tick_2();
+    
+    static void BREAK_tick_1();
+    static void BREAK_tick_2();
+    
+    static void ADD_tick_1();
+    static void ADD_tick_2();
+    
+    static void SUB_tick_1();
+    static void SUB_tick_2();
+    
+    static void AND_tick_1();
+    static void AND_tick_2();
+    
+    static void OR_tick_1();
+    static void OR_tick_2();
+    
+    static void XOR_tick_1();
+    static void XOR_tick_2();
+    
+    static void SLT_tick_1();
+    static void SLT_tick_2();
+    
+    static void SLTU_tick_1();
+    static void SLTU_tick_2();
+    
+    static void SLL_tick_1();
+    static void SLL_tick_2();
+    
+    static void SRL_tick_1();
+    static void SRL_tick_2();
+    
+    static void SRA_tick_1();
+    static void SRA_tick_2();
+    
+    static void SLLV_tick_1();
+    static void SLLV_tick_2();
+    
+    static void SRLV_tick_1();
+    static void SRLV_tick_2();
+    
+    static void SRAV_tick_1();
+    static void SRAV_tick_2();
+    
+    
+private:
+    static void BRANCH_tick_1();
+    static void BRANCH_tick_2();
 };
 
 

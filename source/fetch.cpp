@@ -9,13 +9,13 @@
 /**
  * Step one of instruction fetch
  * RTL: MEM[MAR] <- PC
- * @param PC: Pointer to Program Counter from register file
- * @param programMemory: Pointer to the memory unit that contain the program memory
- * @param bus: Pointer to a Bus
  */
-void if1(StorageObject* PC, Memory* programMemory, Bus* bus) {
-    bus->IN().pullFrom(PC);
-    programMemory->MAR().latchFrom(bus->OUT());
+void if1() {
+    ifbus.IN().pullFrom(pc);
+    im.MAR().latchFrom(ifbus.OUT());
+    ifid_alu.IN1().pullFrom(pc);
+    ifid_alu.IN2().pullFrom(four_const_stor);
+    
 }
 
 /**
@@ -27,29 +27,21 @@ void if1(StorageObject* PC, Memory* programMemory, Bus* bus) {
  *      PC <- ( (IFIDIR & OPCODE == BRANCH) && (IFIDIR & RS op 0) ) ?
  *              IFIDNPC + (IFIDIR && IMM ) << 2 (sign extended) :
  *              PC + 4;
- * @param IFIDIR
- * @param PC
- * @param IMM_MASK
- * @param IFIDNPC
- * @param programMemory
- * @param ALU
  */
-void if2(StorageObject* IFIDIR, Counter* PC, StorageObject* IMM_MASK, 
-        StorageObject* IFIDNPC, Memory* programMemory, BusALU* ALU) {
+void if2() {
     
-    if( (IFIDIR->value() & instruction.op == instruction.branch) && ( 1/*reg[IF/ID.IR[rs] op 0*/) ){ //TODO: Discuss with Carithers what this means
+    if( (((ifid_ir.value() & instruction::op) == instruction::BEQ) && (regs[(ifid_ir.value() & instruction::rs) >> instruction::rs_shift].value() == 0)) ||
+            (((ifid_ir.value() & instruction::op) == instruction::BNE) && (regs[(ifid_ir.value() & instruction::rs) >> instruction::rs_shift].value() != 0))){
         //TODO: I have no idea how to do this in one tick
         //The result of IFIDIR & IMM_MASK needs to be sign extended shifted right twice
         //and then PC and IFIDPC both need the result
-    }
-    else{
-        PC->perform(Counter::incr4);
-        //TODO:This may have some issues depending on timing could push incr back to step 1
-        IFIDNPC->latchFrom(ALU->OUT());
-        ALU->OP1().pullFrom(PC);
         
     }
+    else{
+        ifid_bus.IN().pullFrom(pc);
+        ifid_npc.latchFrom(ifid_bus.OUT());
+    }
     
-    programMemory->read();
-    IFIDIR->latchFrom(programMemory->READ());
+    im.read();
+    ifid_ir.latchFrom(im.READ());
 }
