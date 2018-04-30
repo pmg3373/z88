@@ -57,7 +57,18 @@ enum    instructionFormat {
     sh = 0b00000000000000000000011111000000,
     func = 0b00000000000000000000000000111111,
     imm = 0b00000000000000001111111111111111,
-    target = 0b00000011111111111111111111111111
+    imm_sign_bit = 0b00000000000000001000000000000000,
+    target = 0b00000011111111111111111111111111,
+    target_sign_bit = 0b00000010000000000000000000000000,
+    low_5_bits = 0b11111
+};
+
+enum    operation_types{
+    alu_operation_regtoreg = 1,
+    alu_operation_regimm = 2,
+    load_operation = 3,
+    store_operation = 4,
+    branch_operation = 5
 };
 
 enum    instructionShifts {

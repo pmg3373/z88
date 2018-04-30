@@ -11,11 +11,12 @@
  * RTL: MEM[MAR] <- PC
  */
 void if1() {
-    ifbus.IN().pullFrom(pc);
-    im.MAR().latchFrom(ifbus.OUT());
+    ifid_bus.IN().pullFrom(pc);
+    im.MAR().latchFrom(ifid_bus.OUT());
+    
     ifid_alu.IN1().pullFrom(pc);
     ifid_alu.IN2().pullFrom(four_const_stor);
-    
+    ifid_alu.perform(BusALU::op_add);
 }
 
 /**
