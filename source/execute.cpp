@@ -14,6 +14,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::ADD_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::ADDI){
@@ -22,6 +23,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::ADDI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else if(curopcode == instruction::AND){
@@ -30,6 +32,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::AND_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::ANDI){
@@ -38,6 +41,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::ANDI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else if(curopcode == instruction::BEQ){
@@ -46,6 +50,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::BEQ_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::BNE){
@@ -54,6 +59,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::BNE_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::BREAK){
@@ -62,6 +68,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::BREAK_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg; //TODO: What type is this?
         }
     }
     else if(curopcode == instruction::HALT){
@@ -70,6 +77,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::HALT_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg; //TODO: What type is this?
         }
     }
     else if(curopcode == instruction::J){
@@ -78,6 +86,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::J_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::JAL){
@@ -86,6 +95,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::JAL_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::JALR){
@@ -94,6 +104,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::JALR_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::JR){
@@ -102,6 +113,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::JR_tick_2();
+            exmem_operation_type = instruction::branch_operation;
         }
     }
     else if(curopcode == instruction::LUI){
@@ -110,6 +122,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::LUI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else if(curopcode == instruction::LW){
@@ -118,6 +131,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::LW_tick_2();
+            exmem_operation_type = instruction::load_operation;
         }
     }
     else if(curopcode == instruction::NOP){
@@ -126,6 +140,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::NOP_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg; //TODO: What type is this?
         }
     }
     else if(curopcode == instruction::OR){
@@ -134,6 +149,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::OR_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::ORI){
@@ -142,6 +158,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::ORI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else if(curopcode == instruction::SLL){
@@ -150,6 +167,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SLL_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SLLV){
@@ -158,6 +176,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SLLV_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SLT){
@@ -166,6 +185,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SLT_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SLTI){
@@ -174,6 +194,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SLTI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else if(curopcode == instruction::SLTU){
@@ -182,6 +203,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SLTU_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SRA){
@@ -190,6 +212,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SRA_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SRAV){
@@ -198,6 +221,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SRAV_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SRL){
@@ -206,6 +230,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SRL_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SRLV){
@@ -214,6 +239,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SRLV_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::SUB){
@@ -222,6 +248,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SUB_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg; 
         }
     }
     else if(curopcode == instruction::SW){
@@ -230,6 +257,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::SW_tick_2();
+            exmem_operation_type = instruction::store_operation;
         }
     }
     else if(curopcode == instruction::XOR){
@@ -238,6 +266,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::XOR_tick_2();
+            exmem_operation_type = instruction::alu_operation_regtoreg;
         }
     }
     else if(curopcode == instruction::XORI){
@@ -246,6 +275,7 @@ void exectutionSwitch(int exStage){
         }
         else{
             instruction::XORI_tick_2();
+            exmem_operation_type = instruction::alu_operation_regimm;
         }
     }
     else{
@@ -257,6 +287,11 @@ void exectutionSwitch(int exStage){
 
 
 void ex1() {
+    exmem_ir.latchFrom(exmem_ir_bus.OUT());
+    exmem_ir_bus.IN().pullFrom(idex_ir);
+    
+    exmem_b.latchFrom(exmem_b_bus.OUT());
+    exmem_b_bus.IN().pullFrom(idex_b);
     exectutionSwitch(1);
 }
 

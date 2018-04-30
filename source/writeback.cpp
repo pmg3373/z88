@@ -30,4 +30,6 @@ void wb1() {
     }
 }
 
-void wb2() {}
+void wb2() {
+    
+}
