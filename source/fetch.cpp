@@ -15,7 +15,7 @@ void if1() {
     im.MAR().latchFrom(ifbus.OUT());
 
     ifalu.OP1().pullFrom(ifid_ir);
-    ifalu.OP2().pullFrom(imm_sign_bit);
+    ifalu.OP2().pullFrom(imm_sign_bit_stor);
     ifalu.perform(BusALU::op_extendSign);
     iftemp.latchFrom(ifalu.OUT());
 }

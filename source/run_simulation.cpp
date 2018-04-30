@@ -12,9 +12,6 @@ void run_simulation(char *objfile) {
     //r7.latchFrom(m.READ());
     //Clock::tick();
 
-    // Initialize Constants
-    imm_sign_bit.latchFrom(imm_sign_bit_const.OUT());
-
     while(!done) {
         if1();
         id1();

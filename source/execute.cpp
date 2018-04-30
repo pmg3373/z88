@@ -287,11 +287,11 @@ void exectutionSwitch(int exStage){
 
 
 void ex1() {
-    exmem_ir.latchFrom(exmem_ir_bus.OUT());
-    exmem_ir_bus.IN().pullFrom(idex_ir);
+    ex_ir_bus.IN().pullFrom(idex_ir);
+    exmem_ir.latchFrom(ex_ir_bus.OUT());
     
-    exmem_b.latchFrom(exmem_b_bus.OUT());
-    exmem_b_bus.IN().pullFrom(idex_b);
+    ex_b_bus.IN().pullFrom(idex_b);
+    exmem_b.latchFrom(ex_b_bus.OUT());
     exectutionSwitch(1);
 }
 
