@@ -10,6 +10,12 @@ void make_connections(void);
 
 void run_simulation(char*);
 
+bool alu_instruction(int);
+bool loadp(int);
+bool storep(int);
+bool loadstorep(int);
+bool rralu_instruction(int);
+
 void if1(void);
 void if2(void);
 

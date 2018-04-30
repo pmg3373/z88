@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Ubuntu Jul 25 2014) on Wed Apr 18 16:24:46 2018
+# Created by gmakemake (Ubuntu Jul 25 2014) on Mon Apr 30 01:06:41 2018
 #
 
 #
@@ -54,21 +54,20 @@ CCLIBFLAGS = $(LIBFLAGS)
 ########## End of flags from header.mak
 
 
-CPP_FILES =	decode.cpp execute.cpp fetch.cpp forwarding.cpp globals.cpp make_connections.cpp memory.cpp run_simulation.cpp writeback.cpp z88.cpp
+CPP_FILES =	decode.cpp execute.cpp fetch.cpp forwarding.cpp globals.cpp instruction.cpp make_connections.cpp memory.cpp run_simulation.cpp writeback.cpp z88.cpp
 C_FILES =	
 PS_FILES =	
 S_FILES =	
-H_FILES =	globals.h includes.h prototypes.h
+H_FILES =	globals.h includes.h instruction.h prototypes.h usefuldefines.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	decode.o execute.o fetch.o forwarding.o globals.o make_connections.o memory.o run_simulation.o writeback.o 
+OBJFILES =	decode.o execute.o fetch.o forwarding.o globals.o instruction.o make_connections.o memory.o run_simulation.o writeback.o 
 
 #
 # Main targets
 #
 
 all:	z88 
-	cp z88 ../.
 
 z88:	z88.o $(OBJFILES)
 	$(CXX) $(CXXFLAGS) -o z88 z88.o $(OBJFILES) $(CCLIBFLAGS)
@@ -77,16 +76,17 @@ z88:	z88.o $(OBJFILES)
 # Dependencies
 #
 
-decode.o:	
-execute.o:	
-fetch.o:	
+decode.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+execute.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+fetch.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
 forwarding.o:	
-globals.o:	
-make_connections.o:	
-memory.o:	
-run_simulation.o:	globals.h includes.h prototypes.h
-writeback.o:	
-z88.o:	globals.h includes.h prototypes.h
+globals.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+instruction.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+make_connections.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+memory.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+run_simulation.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+writeback.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
+z88.o:	globals.h includes.h instruction.h prototypes.h usefuldefines.h
 
 #
 # Housekeeping

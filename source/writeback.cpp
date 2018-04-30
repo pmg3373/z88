@@ -6,30 +6,27 @@
 #include "includes.h"
 
 void wb1() {
-    if(1){
+    // ALL THIS SHIT MIGHT BE SUPPOSED TO HAPPEN ON TICK 2
+    if(alu_instruction(memwb_ir.value())){
         //ALU
-        if(1){
+        if(rralu_instruction(memwb_ir.value())){
             //Register to Register ALU
-            regs[(memwb_ir.value() & instruction::rd) >> instruction::rd_shift].latchFrom(wb_ALUOutput_bus.OUT());
-            wb_ALUOutput_bus.IN().pullFrom(memwb_ALUOutput);
+            // reg[MEM/WB.IR[rd]] <- MEM/WB.ALUOutput
+            wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
+            regs[RD(memwb_ir.value())].latchFrom(wb_ALUOutput_bus.OUT());
         }
         else{
             //Immediate to Register ALU
-            regs[(memwb_ir.value() & instruction::rt) >> instruction::rt_shift].latchFrom(wb_ALUOutput_bus.OUT());
-            wb_ALUOutput_bus.IN().pullFrom(memwb_ALUOutput);
+            // reg[MEM/WB.IR[rt]] <- MEM/WB.ALUOutput
+            wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
+            regs[RT(memwb_ir.value())].latchFrom(wb_ALUOutput_bus.OUT());
         }
     }
-    else if(2){
-        //Load/Store
-        if(1){
-            //Load
-            regs[(memwb_ir.value() & instruction::rt) >> instruction::rt_shift].latchFrom(wb_LMD_bus.OUT());
-            wb_LMD_bus.IN().pullFrom(memwb_LMD);
-        }
-    }
-    else{
-        //Branch
-        //Just Idle, Intentionally Blank
+    else if(loadp(memwb_ir.value())){
+        //Load
+        // reg[MEM/WB.IR[rt]] <- MEM/WB.LMD
+        wb_LMD_bus.IN().pullFrom(memwb_lmd);
+        regs[RT(memwb_ir.value())].latchFrom(wb_LMD_bus.OUT());
     }
 }
 
