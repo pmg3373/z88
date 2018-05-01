@@ -5,11 +5,7 @@
 //
 // Contains functions for the memory stage of the pipeline
 
-bool rralu_instruction(int instr) {
-    return alu_instruction(instr);
-}
-
-bool alu_instruction(int instr) {
+bool immralu_instruction(int instr) {
     int opcode = instr & instruction::op;
     int funct = instr & instruction::func;
     return
@@ -18,8 +14,14 @@ bool alu_instruction(int instr) {
         opcode == instruction::ORI ||
         opcode == instruction::XORI ||
         opcode == instruction::SLTI ||
-        opcode == instruction::LUI ||
-       (opcode == 0 && (
+        opcode == instruction::LUI;
+}
+
+bool rralu_instruction(int instr) {
+    int opcode = instr & instruction::op;
+    int funct = instr & instruction::func;
+    return
+        (opcode == 0 && (
         funct  == instruction::ADD ||
         funct  == instruction::SUB ||
         funct  == instruction::AND ||
@@ -35,12 +37,16 @@ bool alu_instruction(int instr) {
         funct  == instruction::SRAV));
 }
 
+bool alu_instruction(int instr) {
+    return immralu_instruction(instr) || rralu_instruction(instr);
+}
+
 bool loadp(int instr) {
-    return (exmem_ir.value() & instruction::op) == instruction::LW;
+    return (instr & instruction::op) == instruction::LW;
 }
 
 bool storep(int instr) {
-    return (exmem_ir.value() & instruction::op) == instruction::SW;
+    return (instr & instruction::op) == instruction::SW;
 }
 
 bool loadstorep(int instr) {

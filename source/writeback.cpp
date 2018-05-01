@@ -11,7 +11,7 @@ void wb1() {
         //ALU
         if(rralu_instruction(memwb_ir.value())){
             regmod = RD(memwb_ir.value());
-            if(!regmod) return;
+            //if(!regmod) return;
             //Register to Register ALU
             // reg[MEM/WB.IR[rd]] <- MEM/WB.ALUOutput
             wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
@@ -20,7 +20,7 @@ void wb1() {
         }
         else{
             regmod = RT(memwb_ir.value());
-            if(!regmod) return;
+            //if(!regmod) return;
             //Immediate to Register ALU
             // reg[MEM/WB.IR[rt]] <- MEM/WB.ALUOutput
             wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
@@ -29,7 +29,8 @@ void wb1() {
     }
     else if(loadp(memwb_ir.value())){
         regmod = RT(memwb_ir.value());
-        if(!regmod) return;
+        //This check doesn't make sense since 0 is a register that can be modified
+        //if(!regmod) return;
         //Load
         // reg[MEM/WB.IR[rt]] <- MEM/WB.LMD
         wb_LMD_bus.IN().pullFrom(memwb_lmd);
@@ -38,6 +39,8 @@ void wb1() {
 }
 
 void wb2() {
+    //This should probably be called something other than ir since we already have
+    //a storage object in our globals file called ir
     int ir = memwb_ir.value();
     int opcode = OP(ir);
     int funct = FUN(ir);
@@ -149,8 +152,8 @@ void wb2() {
     }
     cout << right << setfill('0');
 
-    if (regmod) cout << REGS(regmod);
-    regmod = 0;
+    if (regmod != -1) cout << REGS(regmod);
+    regmod = -1;
 
     cout << endl;
 }

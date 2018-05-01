@@ -6,7 +6,9 @@
 #include "includes.h"
 
 void exectutionSwitch(int exStage){
-    int curopcode = ir.value() && instruction::op;
+    int curopcode = idex_ir.value() & instruction::op;
+    if(curopcode == 0)
+        curopcode = idex_ir.value() & instruction::func;
     
     if(curopcode == instruction::ADD){
         if(exStage == 1){

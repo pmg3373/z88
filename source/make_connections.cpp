@@ -64,6 +64,28 @@ void make_connections(){
 
     idex_b.connectsTo(ex_b_bus.IN());
     exmem_b.connectsTo(ex_b_bus.OUT());
+    
+    idex_a.connectsTo(exALU.OP1());
+    idex_a.connectsTo(exALU.OP2());
+    idex_b.connectsTo(exALU.OP1());
+    idex_b.connectsTo(exALU.OP2());
+    idex_imm.connectsTo(exALU.OP1());
+    idex_imm.connectsTo(exALU.OP2());
+    idex_pc.connectsTo(exALU.OP1());
+    idex_pc.connectsTo(exALU.OP2());
+    idex_sh.connectsTo(exALU.OP1());
+    idex_sh.connectsTo(exALU.OP2());
+    sixteen_const_stor.connectsTo(exALU.OP1());
+    sixteen_const_stor.connectsTo(exALU.OP2());
+    low_five_bits_stor.connectsTo(exALU.OP1());
+    low_five_bits_stor.connectsTo(exALU.OP2());
+    extemp.connectsTo(exALU.OP1());
+    extemp.connectsTo(exALU.OP2());
+    
+    
+    extemp.connectsTo(exALU.OUT());
+    exmem_aluoutput.connectsTo(exALU.OUT());
+    
 
 
     // MEMORY CONNECTIONS
