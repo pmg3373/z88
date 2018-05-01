@@ -28,11 +28,16 @@ void if1() {
  *              PC + 4;
  */
 void if2() {
+    // Transmit PC
+    ifpcbus.IN().pullFrom(pc);
+    ifid_pc.latchFrom(ifpcbus.OUT());
+
+
     if( (((ifid_ir.value() & instruction::op) == instruction::BEQ)
-            && (regs[RS(ifid_ir.value())].value() == 0))
+            && (REGS(RS(ifid_ir.value())).value() == 0))
             ||
             (((ifid_ir.value() & instruction::op) == instruction::BNE)
-            && (regs[RS(ifid_ir.value())].value() != 0))) {
+            && (REGS(RS(ifid_ir.value())).value() != 0))) {
        
         ifalu.OP1().pullFrom(iftemp);
         ifalu.OP2().pullFrom(ifid_npc);

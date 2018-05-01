@@ -7,26 +7,29 @@
 
 // run until done
 void run_simulation(char *objfile) {
-    //m.load(objfile);
+    im.load(objfile);
+    dm.load(objfile);
 
-    //r7.latchFrom(m.READ());
-    //Clock::tick();
+    pc.latchFrom(im.READ());
+    Clock::tick();
 
     while(!done) {
-        if1();
-        id1();
-        ex1();
-        mem1();
-        wb1();
+        if (!(stalled & IFSTALL))  if1();
+        if (!(stalled & IDSTALL))  id1();
+        if (!(stalled & EXSTALL))  ex1();
+        if (!(stalled & MEMSTALL)) mem1();
+        if (!(stalled & WBSTALL))  wb1();
 
         Clock::tick();
 
-        if2();
-        id2();
-        ex2();
-        mem2();
-        wb2();
+        if (!(stalled & IFSTALL))  if2();
+        if (!(stalled & IDSTALL))  id2();
+        if (!(stalled & EXSTALL))  ex2();
+        if (!(stalled & MEMSTALL)) mem2();
+        if (!(stalled & WBSTALL))  wb2();
 
         Clock::tick();
+
+        stalled = stalled >> 1;
     }
 }

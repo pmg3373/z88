@@ -287,18 +287,21 @@ void exectutionSwitch(int exStage){
 
 
 void ex1() {
-    ex_ir_bus.IN().pullFrom(idex_ir);
-    exmem_ir.latchFrom(ex_ir_bus.OUT());
-    
-    ex_b_bus.IN().pullFrom(idex_b);
-    exmem_b.latchFrom(ex_b_bus.OUT());
     exectutionSwitch(1);
 }
 
 void ex2() {
+    // Transmit PC
+    ex_pc_bus.IN().pullFrom(idex_pc);
+    exmem_pc.latchFrom(ex_pc_bus.OUT());
+
     // EX/MEM.IR <- ID/EX.IR
     ex_ir_bus.IN().pullFrom(idex_ir);
     exmem_ir.latchFrom(ex_ir_bus.OUT());
+
+    // There maybe should be a check on here
+    ex_b_bus.IN().pullFrom(idex_b);
+    exmem_b.latchFrom(ex_b_bus.OUT());
 
     exectutionSwitch(2);
 }

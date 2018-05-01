@@ -56,11 +56,15 @@ void mem1() {
 }
 
 void mem2() {
-    if(alu_instruction(exmem_ir.value())) {
-        // MEM/WB.IR <- EX/MEM.IR;
-        mem_ir_bus.IN().pullFrom(exmem_ir);
-        memwb_ir.latchFrom(mem_ir_bus.OUT());
+    // Transmit PC
+    mem_pc_bus.IN().pullFrom(exmem_pc);
+    memwb_pc.latchFrom(mem_pc_bus.OUT());
 
+    // MEM/WB.IR <- EX/MEM.IR;
+    mem_ir_bus.IN().pullFrom(exmem_ir);
+    memwb_ir.latchFrom(mem_ir_bus.OUT());
+
+    if(alu_instruction(exmem_ir.value())) {
         // MEM/WB.ALUOutput <- EX/MEME.ALUOutput
         mem_alu_bus.IN().pullFrom(exmem_aluoutput);
         memwb_aluoutput.latchFrom(mem_alu_bus.OUT());
@@ -68,10 +72,6 @@ void mem2() {
     if(loadstorep(exmem_ir.value())) {
         //Load/Store
         //
-        // MEM/WB.IR <- EX/MEM.IR
-        mem_ir_bus.IN().pullFrom(exmem_ir);
-        memwb_ir.latchFrom(mem_ir_bus.OUT());
-
         if(loadp(exmem_ir.value())){
             // Load
             // MEM/WB.LMD <- Mem[EX/MEM.ALUOutput

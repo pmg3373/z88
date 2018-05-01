@@ -68,6 +68,7 @@ OBJFILES =	decode.o execute.o fetch.o forwarding.o globals.o instruction.o make_
 #
 
 all:	z88 
+	cp z88 ../.
 
 z88:	z88.o $(OBJFILES)
 	$(CXX) $(CXXFLAGS) -o z88 z88.o $(OBJFILES) $(CCLIBFLAGS)

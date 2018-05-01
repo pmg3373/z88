@@ -1,45 +1,88 @@
 #include "includes.h"
 
-const char * reg_names[32] = {
-"REG0",
-"REG1",
-"REG2",
-"REG3",
-"REG4",
-"REG5",
-"REG6",
-"REG7",
-"REG8",
-"REG9",
-"REG10",
-"REG11",
-"REG12",
-"REG13",
-"REG14",
-"REG15",
-"REG16",
-"REG17",
-"REG18",
-"REG19",
-"REG20",
-"REG21",
-"REG22",
-"REG23",
-"REG24",
-"REG25",
-"REG26",
-"REG27",
-"REG28",
-"REG29",
-"REG30",
-"REG31"
-};
-
 void make_connections(){
-    // Initialize registers
-    regs = (Counter*) malloc (32 * sizeof(Counter));
+    // Register file
     for(int i = 0; i < 32; i++) {
-        Counter reg(reg_names[i],  DATA_BITS);
-        std::memcpy(regs + i, &reg, sizeof(Counter));
+        REGS(i).connectsTo(id_a_bus.IN());
+        REGS(i).connectsTo(id_b_bus.IN());
+
+        REGS(i).connectsTo(wb_ALUOutput_bus.OUT());
+        REGS(i).connectsTo(wb_LMD_bus.OUT());
     }
+
+    // FETCH CONNECTIONS
+    pc.connectsTo(ifbus.IN());
+    pc.connectsTo(ifpcbus.IN());
+    pc.connectsTo(ifalu.OUT());
+    pc.connectsTo(im.READ());
+
+    ifid_pc.connectsTo(ifpcbus.OUT());
+
+    im.MAR().connectsTo(ifbus.OUT());
+
+    ifid_ir.connectsTo(ifalu.OP1());
+    ifid_ir.connectsTo(im.READ());
+
+    imm_sign_bit_stor.connectsTo(ifalu.OP2());
+
+    iftemp.connectsTo(ifalu.OUT());
+    iftemp.connectsTo(ifalu.OP1());
+
+    ifid_npc.connectsTo(ifalu.OP2());
+    ifid_npc.connectsTo(ifalu.OUT());
+
+    // DECODE CONNECTIONS
+    ifid_pc.connectsTo(id_pc_bus.IN());
+    idex_pc.connectsTo(id_pc_bus.OUT());
+
+    ifid_ir.connectsTo(id_sh_alu.OP1());
+    ifid_ir.connectsTo(id_ir_bus.IN());
+    ifid_ir.connectsTo(id_imm_alu.OP1());
+
+    sh_mask_stor.connectsTo(id_sh_alu.OP2());
+
+    imm_sign_bit_stor.connectsTo(id_imm_alu.OP2());
+
+    sh_shift_stor.connectsTo(id_sh_alu.OP2());
+
+    id_temp_sh.connectsTo(id_sh_alu.OUT());
+    id_temp_sh.connectsTo(id_sh_alu.OP1());
+
+    idex_a.connectsTo(id_a_bus.OUT());
+    idex_b.connectsTo(id_b_bus.OUT());
+    idex_ir.connectsTo(id_ir_bus.OUT());
+    idex_imm.connectsTo(id_imm_alu.OUT());
+    idex_sh.connectsTo(id_sh_alu.OUT());
+
+
+    // EXECUTE CONNECTIONS
+    idex_pc.connectsTo(ex_pc_bus.IN());
+    exmem_pc.connectsTo(ex_pc_bus.OUT());
+
+    idex_ir.connectsTo(ex_ir_bus.IN());
+    exmem_ir.connectsTo(ex_ir_bus.OUT());
+
+    idex_b.connectsTo(ex_b_bus.IN());
+    exmem_b.connectsTo(ex_b_bus.OUT());
+
+
+    // MEMORY CONNECTIONS
+    exmem_pc.connectsTo(mem_pc_bus.IN());
+    memwb_pc.connectsTo(mem_pc_bus.OUT());
+
+    exmem_aluoutput.connectsTo(mem_alu_bus.IN());
+    dm.MAR().connectsTo(mem_alu_bus.OUT());
+
+    exmem_ir.connectsTo(mem_ir_bus.IN());
+    memwb_ir.connectsTo(mem_ir_bus.OUT());
+
+    exmem_aluoutput.connectsTo(mem_alu_bus.IN());
+    memwb_aluoutput.connectsTo(mem_alu_bus.OUT());
+
+    memwb_lmd.connectsTo(dm.READ());
+    exmem_b.connectsTo(dm.WRITE());
+    // WRITEBACK CONNECTIONS
+    memwb_aluoutput.connectsTo(wb_ALUOutput_bus.IN());
+    memwb_lmd.connectsTo(wb_LMD_bus.IN());
+
 }

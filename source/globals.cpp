@@ -5,15 +5,10 @@
 
 #include "includes.h"
 
-
-
-
-
-
-
-
 // Useful global variables
 bool done = false;
+int stalled = 0xF;
+int regmod = 0;
 StorageObject zero_const_stor("zero", DATA_BITS, 0);
 StorageObject four_const_stor("six", DATA_BITS, 6);
 StorageObject six_const_stor("six", DATA_BITS, 6);
@@ -29,7 +24,6 @@ StorageObject imm_sign_bit_stor("imm sign bit", DATA_BITS, instruction::imm_sign
 StorageObject target_sign_bit_stor("target sign bit", DATA_BITS, instruction::target_sign_bit);
 
 // Standard register set
-/*
 Counter r0("R0", DATA_BITS);
 Counter r1("R1", DATA_BITS);
 Counter r2("R2", DATA_BITS);
@@ -100,8 +94,7 @@ Counter* registerfile[32] = {
     &r30,
     &r31,
 };
-*/
-Counter *regs;
+
 Counter pc("PC", DATA_BITS);
 StorageObject ir("IR", DATA_BITS);
 StorageObject iar("IAR", DATA_BITS);
@@ -113,16 +106,17 @@ StorageObject b("B", DATA_BITS);
 StorageObject c("C", DATA_BITS);
 
 // Memory
-Memory dm("Data Memory", ADDR_BITS, DATA_BITS, 0xffff, 4);
-Memory im("Instruction Memory", ADDR_BITS, DATA_BITS, 0xffff, 4);
+Memory dm("Data Memory", ADDR_BITS, 8, 0xffff, 4);
+Memory im("Instruction Memory", ADDR_BITS, 8, 0xffff, 4);
 
 // Additional registers for pipelining (If we need extra)
 
 // IF/ID
 Clearable ifid_v("IfId_V", 1);
 StorageObject ifid_ir("IfId_IR", DATA_BITS);
-StorageObject ifid_pc("IfId_PC", DATA_BITS);
 Counter ifid_npc("IfId_NPC", DATA_BITS);
+
+StorageObject ifid_pc("IfId_PC", DATA_BITS);
 
 // ID/EX
 StorageObject idex_a("IdEx_A", DATA_BITS);
@@ -132,15 +126,17 @@ StorageObject idex_imm("IdEx_IMM", DATA_BITS);
 StorageObject idex_sh("IdEx_SH", DATA_BITS);
 StorageObject idex_temp_sh("IdEx_TEMP_SH", DATA_BITS);
 
+StorageObject idex_pc("IfEx_PC", DATA_BITS);
+
 // EX/MEM
 StorageObject exmem_ir("ExMem_IR", DATA_BITS);
-StorageObject exmem_pc("ExMem_CPC", DATA_BITS);
 StorageObject exmem_aluoutput("ExMem_ALUOutput", DATA_BITS);
 StorageObject exmem_b("ExMem_B", DATA_BITS);
-StorageObject exmem_cond("ExMem_COND", DATA_BITS);
-StorageObject exmem_cpc("ExMem_CPC", DATA_BITS);
 StorageObject exmem_temp("ExMem_CPC", DATA_BITS);
+StorageObject exmem_cond("ExMem_COND", DATA_BITS);
 int exmem_operation_type = 0;
+
+StorageObject exmem_pc("ExMem_PC", DATA_BITS);
 
 BusALU exALU("exALU", DATA_BITS);
 Bus exmem_ir_bus("ExMem_IR_BUS", DATA_BITS);
@@ -153,7 +149,8 @@ Bus exmem_cond_bus("ExMem_COND_BUS", DATA_BITS);
 StorageObject memwb_ir("MemWb_IR", DATA_BITS);
 StorageObject memwb_aluoutput("MemWb_ALUOutput", DATA_BITS);
 StorageObject memwb_lmd("MemWb_LMD", DATA_BITS);
-StorageObject memwb_cpc("MemWb_CPC", DATA_BITS);
+
+StorageObject memwb_pc("MemWb_PC", DATA_BITS);
 
 // The Krapf's yard
 // Defined busses
@@ -166,10 +163,13 @@ Bus ifbus("IfBus", DATA_BITS);
 BusALU ifalu("IfALU", DATA_BITS);
 StorageObject iftemp("IfTemp", DATA_BITS);
 
+Bus ifpcbus("IfPcBus", DATA_BITS);
+
 // Decode
 Bus id_a_bus("IdABus", DATA_BITS);
 Bus id_b_bus("IdBBus", DATA_BITS);
 Bus id_ir_bus("IdIRBus", DATA_BITS);
+Bus id_pc_bus("IdPcBus", DATA_BITS);
 BusALU id_imm_alu("IdImmALU", DATA_BITS);
 BusALU id_sh_alu("IdShALU", DATA_BITS);
 
@@ -178,10 +178,12 @@ StorageObject id_temp_sh("IdTemp", DATA_BITS);
 // Execute
 Bus ex_ir_bus("EXIRBUS", DATA_BITS);
 Bus ex_b_bus("EXBBUS", DATA_BITS);
+Bus ex_pc_bus("EXPCBUS", DATA_BITS);
 
 // Memory
 Bus mem_ir_bus("MEMIRBUS", DATA_BITS);
 Bus mem_alu_bus("MEMALUBUS", DATA_BITS);
+Bus mem_pc_bus("MEMPCBUS", DATA_BITS);
 
 // WB
 Bus wb_ALUOutput_bus("WBALUBUS", DATA_BITS);

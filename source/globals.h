@@ -14,6 +14,8 @@
 
 // Useful global variables
 extern bool done;
+extern int stalled;
+extern int regmod;
 extern StorageObject zero_const_stor;
 extern StorageObject four_const_stor;
 extern StorageObject six_const_stor;
@@ -29,7 +31,7 @@ extern StorageObject imm_sign_bit_stor; //
 extern StorageObject target_sign_bit_stor;
 
 // Standard register set
-extern Counter* regs;
+extern Counter* registerfile[32];
 extern Counter pc; //
 extern StorageObject ir;
 extern StorageObject iar;
@@ -51,6 +53,8 @@ extern Clearable ifid_v;
 extern StorageObject ifid_ir; //
 extern Counter ifid_npc; //
 
+extern StorageObject ifid_pc;
+
 //ID-EX Stage Components
 extern StorageObject idex_a; //
 extern StorageObject idex_b; //
@@ -59,14 +63,17 @@ extern StorageObject idex_imm; //
 extern StorageObject idex_sh; //
 extern StorageObject idex_temp_sh;
 
+extern StorageObject idex_pc;
+
 // EX/MEM
 extern StorageObject exmem_ir; //
-extern StorageObject exmem_pc;
 extern StorageObject exmem_aluoutput; //
 extern StorageObject exmem_b; //
 extern StorageObject exmem_temp;
 extern StorageObject exmem_cond;
 extern int exmem_operation_type;
+
+extern StorageObject exmem_pc;
 
 extern Bus exmem_ALUOutput_bus;
 extern Bus exmem_b_bus;
@@ -78,8 +85,12 @@ extern Bus exbus;
 extern StorageObject memwb_ir; //
 extern StorageObject memwb_aluoutput; //
 extern StorageObject memwb_lmd; //
-extern int memwb_operation_type;
-extern int memwb_operation_type_prev;
+//extern int memwb_operation_type;
+//extern int memwb_operation_type_prev;
+
+extern StorageObject memwb_pc;
+
+
 
 // The Krapf's yard
 // Defined busses
@@ -90,11 +101,13 @@ extern Bus exbus;
 extern Bus ifbus; //
 extern BusALU ifalu; //
 extern StorageObject iftemp; //
+extern Bus ifpcbus;
 
 // Decode
 extern Bus id_a_bus; //
 extern Bus id_b_bus; //
 extern Bus id_ir_bus; //
+extern Bus id_pc_bus;
 extern BusALU id_imm_alu; //
 extern BusALU id_sh_alu; //
 
@@ -103,10 +116,12 @@ extern StorageObject id_temp_sh; //
 // Execute
 extern Bus ex_ir_bus;
 extern Bus ex_b_bus;
+extern Bus ex_pc_bus;
 
 // Memory
 extern Bus mem_ir_bus; //
 extern Bus mem_alu_bus; //
+extern Bus mem_pc_bus;
 
 // WB
 extern Bus wb_ALUOutput_bus;
