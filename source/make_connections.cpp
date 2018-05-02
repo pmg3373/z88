@@ -32,18 +32,23 @@ void make_connections(){
     ifid_npc.connectsTo(ifalu.OUT());
 
     // DECODE CONNECTIONS
+    pc.connectsTo(id_j_alu.OUT());
+
     ifid_pc.connectsTo(id_pc_bus.IN());
     idex_pc.connectsTo(id_pc_bus.OUT());
 
     ifid_ir.connectsTo(id_sh_alu.OP1());
     ifid_ir.connectsTo(id_ir_bus.IN());
     ifid_ir.connectsTo(id_imm_alu.OP1());
+    ifid_ir.connectsTo(id_j_alu.OP1());
 
     sh_mask_stor.connectsTo(id_sh_alu.OP2());
 
     imm_sign_bit_stor.connectsTo(id_imm_alu.OP2());
 
     sh_shift_stor.connectsTo(id_sh_alu.OP2());
+
+    jump_mask_stor.connectsTo(id_j_alu.OP2());
 
     id_temp_sh.connectsTo(id_sh_alu.OUT());
     id_temp_sh.connectsTo(id_sh_alu.OP1());
@@ -65,6 +70,7 @@ void make_connections(){
     idex_b.connectsTo(ex_b_bus.IN());
     exmem_b.connectsTo(ex_b_bus.OUT());
     
+    idex_ir.connectsTo(exALU.OP1());
     idex_a.connectsTo(exALU.OP1());
     idex_a.connectsTo(exALU.OP2());
     idex_b.connectsTo(exALU.OP1());

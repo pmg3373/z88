@@ -6,6 +6,7 @@
 #include "includes.h"
 
 void wb1() {
+    cout << std::hex << setw(8) << memwb_pc.value();
     // ALL THIS SHIT MIGHT BE SUPPOSED TO HAPPEN ON TICK 2
     if(alu_instruction(memwb_ir.value())){
         //ALU
@@ -46,8 +47,7 @@ void wb2() {
     int funct = FUN(ir);
     int switcher = opcode ? ir & instruction::op : ir & instruction::func;
 
-    cout << std::hex << setw(8) << memwb_pc.value()
-         << ":  " << setw(2) << opcode << " ";
+    cout << ":  " << setw(2) << opcode << " ";
     if (opcode) cout << "   ";
     else        cout << setw(2) << funct << " ";
 
@@ -152,8 +152,10 @@ void wb2() {
     }
     cout << right << setfill('0');
 
-    if (regmod != -1) cout << " " << REGS(regmod);
-    regmod = -1;
+    //if (regmod != -1) cout << " " << REGS(regmod);
+    //regmod = -1;
+    if (regmod) cout << " " << REGS(regmod);
+    regmod = 0;
 
     cout << endl;
 }

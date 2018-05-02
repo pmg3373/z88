@@ -22,6 +22,7 @@ StorageObject target_mask_stor("target mask", DATA_BITS, instruction::target);
 StorageObject low_five_bits_stor("low five bits", DATA_BITS, instruction::low_5_bits);
 StorageObject imm_sign_bit_stor("imm sign bit", DATA_BITS, instruction::imm_sign_bit);
 StorageObject target_sign_bit_stor("target sign bit", DATA_BITS, instruction::target_sign_bit);
+StorageObject jump_mask_stor("jump mask", DATA_BITS, instruction::target);
 
 // Standard register set
 Counter r0("R0", DATA_BITS);
@@ -172,6 +173,7 @@ Bus id_ir_bus("IdIRBus", DATA_BITS);
 Bus id_pc_bus("IdPcBus", DATA_BITS);
 BusALU id_imm_alu("IdImmALU", DATA_BITS);
 BusALU id_sh_alu("IdShALU", DATA_BITS);
+BusALU id_j_alu("IdjALU", DATA_BITS);
 
 StorageObject id_temp_sh("IdTemp", DATA_BITS);
 

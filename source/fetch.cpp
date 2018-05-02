@@ -11,8 +11,14 @@
  * RTL: MEM[MAR] <- PC
  */
 void if1() {
+    // Transmit PC
+    ifpcbus.IN().pullFrom(pc);
+    ifid_pc.latchFrom(ifpcbus.OUT());
+
     ifbus.IN().pullFrom(pc);
     im.MAR().latchFrom(ifbus.OUT());
+
+    pc.perform(Counter::incr4);
 
     ifalu.OP1().pullFrom(ifid_ir);
     ifalu.OP2().pullFrom(imm_sign_bit_stor);
@@ -28,11 +34,6 @@ void if1() {
  *              PC + 4;
  */
 void if2() {
-    // Transmit PC
-    ifpcbus.IN().pullFrom(pc);
-    ifid_pc.latchFrom(ifpcbus.OUT());
-
-
     if( (((ifid_ir.value() & instruction::op) == instruction::BEQ)
             && (REGS(RS(ifid_ir.value())).value() == 0))
             ||
@@ -47,7 +48,6 @@ void if2() {
     }
     else {
         ifid_npc.perform(Counter::incr4);
-        pc.perform(Counter::incr4);
     }
     
     im.read();

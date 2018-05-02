@@ -29,6 +29,7 @@ extern StorageObject target_mask_stor;
 extern StorageObject low_five_bits_stor;
 extern StorageObject imm_sign_bit_stor; //
 extern StorageObject target_sign_bit_stor;
+extern StorageObject jump_mask_stor;
 
 // Standard register set
 extern Counter* registerfile[32];
@@ -110,6 +111,7 @@ extern Bus id_ir_bus; //
 extern Bus id_pc_bus;
 extern BusALU id_imm_alu; //
 extern BusALU id_sh_alu; //
+extern BusALU id_j_alu;
 
 extern StorageObject id_temp_sh; //
 

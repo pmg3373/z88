@@ -59,6 +59,10 @@ bool loadstorep(int instr) {
 }
 
 void mem1() {
+    // Transmit PC
+    mem_pc_bus.IN().pullFrom(exmem_pc);
+    memwb_pc.latchFrom(mem_pc_bus.OUT());
+
     if(loadstorep(exmem_ir.value())) {
         //Load/Store instructions
         mem_alu_bus.IN().pullFrom(exmem_aluoutput);
@@ -67,10 +71,6 @@ void mem1() {
 }
 
 void mem2() {
-    // Transmit PC
-    mem_pc_bus.IN().pullFrom(exmem_pc);
-    memwb_pc.latchFrom(mem_pc_bus.OUT());
-
     // MEM/WB.IR <- EX/MEM.IR;
     mem_ir_bus.IN().pullFrom(exmem_ir);
     memwb_ir.latchFrom(mem_ir_bus.OUT());
