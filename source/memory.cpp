@@ -41,6 +41,11 @@ bool alu_instruction(int instr) {
     return immralu_instruction(instr) || rralu_instruction(instr);
 }
 
+bool branchp(int instr) {
+    return ((instr & instruction::op) == instruction::BEQ) ||
+           ((instr & instruction::op) == instruction::BNE);
+}
+
 bool loadp(int instr) {
     return (instr & instruction::op) == instruction::LW;
 }

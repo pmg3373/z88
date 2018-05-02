@@ -13,8 +13,10 @@ void run_simulation(char*);
 bool alu_instruction(int);
 bool loadp(int);
 bool storep(int);
+bool branchp(int);
 bool loadstorep(int);
 bool rralu_instruction(int);
+bool immralu_instruction(int);
 
 void if1(void);
 void if2(void);
