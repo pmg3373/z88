@@ -106,8 +106,8 @@ StorageObject b("B", DATA_BITS);
 StorageObject c("C", DATA_BITS);
 
 // Memory
-Memory dm("Data Memory", ADDR_BITS, 8, 0xffff, 4);
-Memory im("Instruction Memory", ADDR_BITS, 8, 0xffff, 4);
+Memory dm("DMemory", ADDR_BITS, 8, 0xffff, 4);
+Memory im("IMemory", ADDR_BITS, 8, 0xffff, 4);
 
 // Additional registers for pipelining (If we need extra)
 

@@ -152,7 +152,7 @@ void wb2() {
     }
     cout << right << setfill('0');
 
-    if (regmod != -1) cout << REGS(regmod);
+    if (regmod != -1) cout << " " << REGS(regmod);
     regmod = -1;
 
     cout << endl;
