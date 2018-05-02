@@ -189,7 +189,7 @@ void instruction::AND_tick_2(){
     exALU.OP1().pullFrom(idex_b);
     exALU.OP2().pullFrom(idex_a);
     exmem_aluoutput.latchFrom(exALU.OUT());
-    exALU.perform(BusALU::op_add);
+    exALU.perform(BusALU::op_and);
 }
 
 void instruction::OR_tick_1(){
@@ -198,7 +198,7 @@ void instruction::OR_tick_2(){
     exALU.OP1().pullFrom(idex_b);
     exALU.OP2().pullFrom(idex_a);
     exmem_aluoutput.latchFrom(exALU.OUT());
-    exALU.perform(BusALU::op_add);
+    exALU.perform(BusALU::op_or);
 }
 
 void instruction::XOR_tick_1(){
@@ -207,7 +207,7 @@ void instruction::XOR_tick_2(){
     exALU.OP1().pullFrom(idex_b);
     exALU.OP2().pullFrom(idex_a);
     exmem_aluoutput.latchFrom(exALU.OUT());
-    exALU.perform(BusALU::op_add);
+    exALU.perform(BusALU::op_xor);
 }
 
 void instruction::SLT_tick_1(){
