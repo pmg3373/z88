@@ -14,6 +14,8 @@
 
 // Useful global variables
 extern bool done;
+extern bool jumping;
+extern bool branching;
 extern int stalled;
 extern int regmod;
 extern StorageObject zero_const_stor;
@@ -114,6 +116,7 @@ extern BusALU id_sh_alu; //
 extern BusALU id_j_alu;
 
 extern StorageObject id_temp_sh; //
+extern StorageObject id_temp_br;
 
 // Execute
 extern Bus ex_ir_bus;

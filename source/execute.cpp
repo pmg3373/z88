@@ -289,14 +289,14 @@ void exectutionSwitch(int exStage){
 
 
 void ex1() {
-    // Transmit PC
-    ex_pc_bus.IN().pullFrom(idex_pc);
-    exmem_pc.latchFrom(ex_pc_bus.OUT());
-
     exectutionSwitch(1);
 }
 
 void ex2() {
+    // Transmit PC
+    ex_pc_bus.IN().pullFrom(idex_pc);
+    exmem_pc.latchFrom(ex_pc_bus.OUT());
+
     // EX/MEM.IR <- ID/EX.IR
     ex_ir_bus.IN().pullFrom(idex_ir);
     exmem_ir.latchFrom(ex_ir_bus.OUT());

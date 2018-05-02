@@ -7,6 +7,8 @@
 
 // Useful global variables
 bool done = false;
+bool jumping = false;
+bool branching = false;
 int stalled = 0xF;
 int regmod = 0;
 StorageObject zero_const_stor("zero", DATA_BITS, 0);
@@ -176,6 +178,7 @@ BusALU id_sh_alu("IdShALU", DATA_BITS);
 BusALU id_j_alu("IdjALU", DATA_BITS);
 
 StorageObject id_temp_sh("IdTemp", DATA_BITS);
+StorageObject id_temp_br("IdTempBr", DATA_BITS);
 
 // Execute
 Bus ex_ir_bus("EXIRBUS", DATA_BITS);

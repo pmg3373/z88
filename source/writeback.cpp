@@ -5,8 +5,20 @@
 
 #include "includes.h"
 
+void dumpregs() {
+    cout << right << setfill('0');
+    int numprinted = 0;
+    for(int i = 0; i < 32; i++) {
+        if(REGS(i).value()) {
+            if(!(numprinted % 4))
+                cout << endl << "   ";
+            cout << "  " << REGS(i);
+            numprinted++;
+        }
+    }
+}
+
 void wb1() {
-    cout << std::hex << setw(8) << memwb_pc.value();
     // ALL THIS SHIT MIGHT BE SUPPOSED TO HAPPEN ON TICK 2
     if(alu_instruction(memwb_ir.value())){
         //ALU
@@ -47,7 +59,8 @@ void wb2() {
     int funct = FUN(ir);
     int switcher = opcode ? ir & instruction::op : ir & instruction::func;
 
-    cout << ":  " << setw(2) << opcode << " ";
+    cout << std::hex << setw(8) << memwb_pc.value()
+         << ":  " << setw(2) << opcode << " ";
     if (opcode) cout << "   ";
     else        cout << setw(2) << funct << " ";
 
@@ -106,6 +119,7 @@ void wb2() {
           break;
         case instruction::BREAK:
           cout << "BREAK";
+          dumpregs();
           break;
         case instruction::ADD:
           cout << "ADD";

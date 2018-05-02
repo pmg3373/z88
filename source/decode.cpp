@@ -12,33 +12,47 @@ void jumparound() {
     pc.latchFrom(id_j_alu.OUT());
 }
 
-void testjumps() {
-    if ((ifid_ir.value() & instruction::op) == instruction::J) {
-        jumparound();
-        return;
-    }
-    if ((ifid_ir.value() & instruction::op) == instruction::BEQ) {
-        if(REGS(RS(ifid_ir.value())).value() == REGS(RT(ifid_ir.value())).value())
-            jumparound();
-    }
-    if ((ifid_ir.value() & instruction::op) == instruction::BNE) {
-        if(REGS(RS(ifid_ir.value())).value() != REGS(RT(ifid_ir.value())).value())
-            jumparound();
-    }
+void brancharound() {
+    id_j_alu.OP1().pullFrom(id_temp_br);
+    id_j_alu.OP2().pullFrom(pc);
+    id_j_alu.perform(BusALU::op_add);
+    pc.latchFrom(id_j_alu.OUT());
+}
+
+void setjump() {
+    jumping = (ifid_ir.value() & instruction::op) == instruction::J;
+}
+
+void setbranch() {
+    branching =
+    (((ifid_ir.value() & instruction::op) == instruction::BEQ) &&
+        REGS(RS(ifid_ir.value())).value() == REGS(RT(ifid_ir.value())).value())
+        ||
+    (((ifid_ir.value() & instruction::op) == instruction::BNE) &&
+        REGS(RS(ifid_ir.value())).value() != REGS(RT(ifid_ir.value())).value())
+        ;
 }
 
 void id1() {
-    // Transmit PC
-    id_pc_bus.IN().pullFrom(ifid_pc);
-    idex_pc.latchFrom(id_pc_bus.OUT());
-
     id_sh_alu.OP1().pullFrom(ifid_ir);
     id_sh_alu.OP2().pullFrom(sh_mask_stor);
     id_sh_alu.perform(BusALU::op_and);
     id_temp_sh.latchFrom(id_sh_alu.OUT());
+
+    id_imm_alu.OP1().pullFrom(ifid_ir);
+    id_imm_alu.OP2().pullFrom(imm_sign_bit_stor);
+    id_imm_alu.perform(BusALU::op_extendSign);
+    id_temp_br.latchFrom(id_imm_alu.OUT());
+
+    setjump();
+    setbranch();
 }
 
 void id2() {
+    // Transmit PC
+    id_pc_bus.IN().pullFrom(ifid_pc);
+    idex_pc.latchFrom(id_pc_bus.OUT());
+
     // ID/EX.A <- reg[IF/ID.IR[rs]]
     id_a_bus.IN().pullFrom(REGS(RS(ifid_ir.value())));
     idex_a.latchFrom(id_a_bus.OUT());
@@ -52,6 +66,7 @@ void id2() {
     idex_ir.latchFrom(id_ir_bus.OUT());
 
     // ID/EX.Imm <- sign-extend(IF/ID.IR[imm])
+    // At this point this could just be turned into a simple pull from temp_br
     id_imm_alu.OP1().pullFrom(ifid_ir);
     id_imm_alu.OP2().pullFrom(imm_sign_bit_stor);
     id_imm_alu.perform(BusALU::op_extendSign);
@@ -62,6 +77,9 @@ void id2() {
     id_sh_alu.perform(BusALU::op_rshift);
     idex_sh.latchFrom(id_sh_alu.OUT());
 
-    testjumps();
+    if(jumping) jumparound();
+    if(branching) brancharound();
+    jumping = false;
+    branching = false;
 }
 

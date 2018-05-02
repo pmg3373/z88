@@ -33,6 +33,7 @@ void make_connections(){
 
     // DECODE CONNECTIONS
     pc.connectsTo(id_j_alu.OUT());
+    pc.connectsTo(id_j_alu.OP2());
 
     ifid_pc.connectsTo(id_pc_bus.IN());
     idex_pc.connectsTo(id_pc_bus.OUT());
@@ -52,6 +53,9 @@ void make_connections(){
 
     id_temp_sh.connectsTo(id_sh_alu.OUT());
     id_temp_sh.connectsTo(id_sh_alu.OP1());
+
+    id_temp_br.connectsTo(id_imm_alu.OUT());
+    id_temp_br.connectsTo(id_j_alu.OP1());
 
     idex_a.connectsTo(id_a_bus.OUT());
     idex_b.connectsTo(id_b_bus.OUT());
