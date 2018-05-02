@@ -82,10 +82,10 @@ void make_connections(){
     extemp.connectsTo(exALU.OP1());
     extemp.connectsTo(exALU.OP2());
     
-    
     extemp.connectsTo(exALU.OUT());
     exmem_aluoutput.connectsTo(exALU.OUT());
     
+    exmem_b.connectsTo(exALU.IN1());
 
 
     // MEMORY CONNECTIONS

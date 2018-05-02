@@ -132,7 +132,7 @@ StorageObject idex_pc("IfEx_PC", DATA_BITS);
 StorageObject exmem_ir("ExMem_IR", DATA_BITS);
 StorageObject exmem_aluoutput("ExMem_ALUOutput", DATA_BITS);
 StorageObject exmem_b("ExMem_B", DATA_BITS);
-StorageObject exmem_temp("ExMem_CPC", DATA_BITS);
+StorageObject exmem_temp("ExMem_temp", DATA_BITS);
 StorageObject exmem_cond("ExMem_COND", DATA_BITS);
 int exmem_operation_type = 0;
 

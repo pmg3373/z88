@@ -255,7 +255,7 @@ void instruction::SRA_tick_2(){
 }
 
 void instruction::SLLV_tick_1(){
-    exmem_temp.latchFrom(exALU.OUT());
+    extemp.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(idex_a);
     exALU.IN2().pullFrom(low_five_bits_stor);
     exALU.perform(BusALU::op_and);
@@ -263,12 +263,12 @@ void instruction::SLLV_tick_1(){
 void instruction::SLLV_tick_2(){
     exmem_aluoutput.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(exmem_b);
-    exALU.IN2().pullFrom(exmem_temp);
+    exALU.IN2().pullFrom(extemp);
     exALU.perform(BusALU::op_lshift);
 }
 
 void instruction::SRLV_tick_1(){
-    exmem_temp.latchFrom(exALU.OUT());
+    extemp.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(idex_a);
     exALU.IN2().pullFrom(low_five_bits_stor);
     exALU.perform(BusALU::op_and);
@@ -276,12 +276,12 @@ void instruction::SRLV_tick_1(){
 void instruction::SRLV_tick_2(){
     exmem_aluoutput.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(exmem_b);
-    exALU.IN2().pullFrom(exmem_temp);
+    exALU.IN2().pullFrom(extemp);
     exALU.perform(BusALU::op_rshift);
 }
 
 void instruction::SRAV_tick_1(){
-    exmem_temp.latchFrom(exALU.OUT());
+    extemp.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(idex_a);
     exALU.IN2().pullFrom(low_five_bits_stor);
     exALU.perform(BusALU::op_and);
@@ -289,7 +289,7 @@ void instruction::SRAV_tick_1(){
 void instruction::SRAV_tick_2(){
     exmem_aluoutput.latchFrom(exALU.OUT());
     exALU.IN1().pullFrom(exmem_b);
-    exALU.IN2().pullFrom(exmem_temp);
+    exALU.IN2().pullFrom(extemp);
     exALU.perform(BusALU::op_rashift);
 }
 
