@@ -114,6 +114,7 @@ extern Bus id_pc_bus;
 extern BusALU id_imm_alu; //
 extern BusALU id_sh_alu; //
 extern BusALU id_j_alu;
+extern Bus id_j_bus;
 
 extern StorageObject id_temp_sh; //
 extern StorageObject id_temp_br;

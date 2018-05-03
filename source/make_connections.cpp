@@ -8,6 +8,7 @@ void make_connections(){
 
         REGS(i).connectsTo(wb_ALUOutput_bus.OUT());
         REGS(i).connectsTo(wb_LMD_bus.OUT());
+        REGS(i).connectsTo(id_j_bus.OUT());
     }
 
     // FETCH CONNECTIONS
@@ -15,6 +16,7 @@ void make_connections(){
     pc.connectsTo(ifpcbus.IN());
     pc.connectsTo(ifalu.OUT());
     pc.connectsTo(im.READ());
+    pc.connectsTo(id_j_bus.IN());
 
     ifid_pc.connectsTo(ifpcbus.OUT());
 

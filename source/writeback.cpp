@@ -24,7 +24,8 @@ void wb1() {
         //ALU
         if(rralu_instruction(memwb_ir.value())){
             regmod = RD(memwb_ir.value());
-            //if(!regmod) return;
+            if(regmod == 0) 
+                return;
             //Register to Register ALU
             // reg[MEM/WB.IR[rd]] <- MEM/WB.ALUOutput
             wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
@@ -33,7 +34,8 @@ void wb1() {
         }
         else{
             regmod = RT(memwb_ir.value());
-            //if(!regmod) return;
+            if(regmod == 0) 
+                return;
             //Immediate to Register ALU
             // reg[MEM/WB.IR[rt]] <- MEM/WB.ALUOutput
             wb_ALUOutput_bus.IN().pullFrom(memwb_aluoutput);
@@ -42,8 +44,8 @@ void wb1() {
     }
     else if(loadp(memwb_ir.value())){
         regmod = RT(memwb_ir.value());
-        //This check doesn't make sense since 0 is a register that can be modified
-        //if(!regmod) return;
+        if(regmod == 0) 
+            return;
         //Load
         // reg[MEM/WB.IR[rt]] <- MEM/WB.LMD
         wb_LMD_bus.IN().pullFrom(memwb_lmd);
@@ -166,10 +168,9 @@ void wb2() {
     }
     cout << right << setfill('0');
 
-    //if (regmod != -1) cout << " " << REGS(regmod);
-    //regmod = -1;
-    if (regmod) cout << " " << REGS(regmod);
-    regmod = 0;
+    if (regmod != -1) 
+        cout << " " << REGS(regmod);
+    regmod = -1;
 
     cout << endl;
 }

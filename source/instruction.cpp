@@ -32,13 +32,27 @@ void instruction::NOP_tick_1(){}
 void instruction::NOP_tick_2(){}
 
 void instruction::J_tick_1(){
+    exALU.OP1().pullFrom(idex_imm);
+    exALU.OP2().pullFrom(target_mask_stor);
+    exALU.perform(BusALU::op_and);
+    pc.latchFrom(exALU.OUT());
 }
 void instruction::J_tick_2(){
 }
 
 void instruction::JAL_tick_1(){
+    exbus.IN().pullFrom(pc);
+    c.latchFrom(exbus.OUT());
+    
 }
 void instruction::JAL_tick_2(){
+    //TODO:Is this correct?
+    exALU.OP1().pullFrom(a);
+    exALU.perform(BusALU::op_rop1);
+    pc.latchFrom(exALU.OUT());
+    
+    exbus.IN().pullFrom(c);
+    REGS(31).latchFrom(exbus.OUT());
 }
 
 void instruction::BEQ_tick_1(){
@@ -93,18 +107,26 @@ void instruction::ANDI_tick_2(){
 }
 
 void instruction::ORI_tick_1(){
+    exALU.OP1().pullFrom(idex_imm);
+    exALU.OP2().pullFrom(imm_mask_stor);
+    exALU.perform(BusALU::op_and);
+    extemp.latchFrom(exALU.OUT());
 }
 void instruction::ORI_tick_2(){
-    exALU.OP1().pullFrom(idex_imm);
+    exALU.OP1().pullFrom(exmem_temp);
     exALU.OP2().pullFrom(idex_a);
     exmem_aluoutput.latchFrom(exALU.OUT());
     exALU.perform(BusALU::op_or);
 }
 
 void instruction::XORI_tick_1(){
+    exALU.OP1().pullFrom(idex_imm);
+    exALU.OP2().pullFrom(imm_mask_stor);
+    exALU.perform(BusALU::op_and);
+    extemp.latchFrom(exALU.OUT());
 }
 void instruction::XORI_tick_2(){
-    exALU.OP1().pullFrom(idex_imm);
+    exALU.OP1().pullFrom(exmem_temp);
     exALU.OP2().pullFrom(idex_a);
     exmem_aluoutput.latchFrom(exALU.OUT());
     exALU.perform(BusALU::op_xor);
@@ -139,7 +161,6 @@ void instruction::SW_tick_2(){
 
 void instruction::HALT_tick_1(){}
 void instruction::HALT_tick_2(){}
-
 
 void instruction::JR_tick_1(){
 }

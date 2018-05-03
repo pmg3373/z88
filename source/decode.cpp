@@ -6,10 +6,44 @@
 #include "includes.h"
 
 void jumparound() {
-    id_j_alu.OP1().pullFrom(ifid_ir);
-    id_j_alu.OP2().pullFrom(jump_mask_stor);
-    id_j_alu.perform(BusALU::op_and);
-    pc.latchFrom(id_j_alu.OUT());
+    if((ifid_ir.value() & instruction::op) == instruction::J){
+        
+        id_j_alu.OP1().pullFrom(ifid_ir);
+        id_j_alu.OP2().pullFrom(jump_mask_stor);
+        id_j_alu.perform(BusALU::op_and);
+        pc.latchFrom(id_j_alu.OUT());
+        
+    }
+    else if((ifid_ir.value() & instruction::op) == instruction::JAL){
+        
+        id_j_alu.OP1().pullFrom(ifid_ir);
+        id_j_alu.OP2().pullFrom(jump_mask_stor);
+        id_j_alu.perform(BusALU::op_and);
+        pc.latchFrom(id_j_alu.OUT());
+        
+        REGS(31).latchFrom(id_j_bus.OUT());
+        id_j_bus.IN().pullFrom(pc);
+        
+    }
+    else if((ifid_ir.value() & instruction::op) == instruction::JALR){
+        
+        id_j_alu.OP1().pullFrom(ifid_ir);
+        id_j_alu.OP2().pullFrom(jump_mask_stor);
+        id_j_alu.perform(BusALU::op_and);
+        pc.latchFrom(id_j_alu.OUT());
+        
+        REGS(RS(ifid_ir.value())).latchFrom(id_j_bus.OUT());
+        id_j_bus.IN().pullFrom(pc);
+        
+    }
+    else if((ifid_ir.value() & instruction::op) == instruction::JR){
+        
+        id_j_alu.OP1().pullFrom(REGS(RS(ifid_ir.value())));
+        id_j_alu.OP2().pullFrom(jump_mask_stor);
+        id_j_alu.perform(BusALU::op_and);
+        pc.latchFrom(id_j_alu.OUT());
+        
+    }
 }
 
 void brancharound() {

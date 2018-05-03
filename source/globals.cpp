@@ -176,6 +176,7 @@ Bus id_pc_bus("IdPcBus", DATA_BITS);
 BusALU id_imm_alu("IdImmALU", DATA_BITS);
 BusALU id_sh_alu("IdShALU", DATA_BITS);
 BusALU id_j_alu("IdjALU", DATA_BITS);
+Bus id_j_bus("IdjBus", DATA_BITS);
 
 StorageObject id_temp_sh("IdTemp", DATA_BITS);
 StorageObject id_temp_br("IdTempBr", DATA_BITS);
